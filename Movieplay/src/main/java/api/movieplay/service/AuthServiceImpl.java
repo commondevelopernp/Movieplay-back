@@ -3,7 +3,6 @@ package api.movieplay.service;
 import api.movieplay.config.JwtConfig;
 import api.movieplay.model.dao.UserRepository;
 import api.movieplay.model.entity.User;
-import api.movieplay.service.AuthService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
