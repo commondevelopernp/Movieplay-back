@@ -1,8 +1,8 @@
 package api.movieplay.service;
 
 import api.movieplay.config.JwtConfig;
+import api.movieplay.model.dao.UserRepository;
 import api.movieplay.model.entity.User;
-import api.movieplay.repository.UserRepository;
 import api.movieplay.service.AuthService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

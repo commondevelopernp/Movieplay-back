@@ -1,4 +1,4 @@
-package api.movieplay.repository;
+package api.movieplay.model.dao;
 import api.movieplay.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
