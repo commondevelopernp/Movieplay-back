@@ -1,5 +1,6 @@
 package api.movieplay.controller;
 
+import api.movieplay.model.dao.MovieTitleAndImageDTO;
 import api.movieplay.model.entity.Movie;
 import api.movieplay.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class MovieController {
     @GetMapping
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
+    }
+
+    @GetMapping("/titles-and-images")
+    public List<MovieTitleAndImageDTO> getMovieTitlesAndFirstImages() {
+        return movieService.getMovieTitlesAndFirstImages();
     }
 
     @GetMapping("/{id}")
