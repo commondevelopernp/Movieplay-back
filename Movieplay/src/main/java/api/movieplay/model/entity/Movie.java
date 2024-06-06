@@ -1,5 +1,7 @@
 package api.movieplay.model.entity;
+
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -10,7 +12,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique=true)
     private String title;
 
     private String subtitle;
@@ -39,117 +41,131 @@ public class Movie {
     @Column(name = "actor_name")
     private List<String> cast;
 
-	public Long getId() {
-		return id;
-	}
+    // Constructor vacío
+    public Movie() {}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Getters y setters
 
-	public String getTitle() {
-		return title;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getSubtitle() {
-		return subtitle;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setSubtitle(String subtitle) {
-		this.subtitle = subtitle;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getSynopsis() {
-		return synopsis;
-	}
+    public String getSubtitle() {
+        return subtitle;
+    }
 
-	public void setSynopsis(String synopsis) {
-		this.synopsis = synopsis;
-	}
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 
-	public String getGenre() {
-		return genre;
-	}
+    public String getSynopsis() {
+        return synopsis;
+    }
 
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
 
-	public List<String> getImages() {
-		return images;
-	}
+    public String getGenre() {
+        return genre;
+    }
 
-	public void setImages(List<String> images) {
-		this.images = images;
-	}
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 
-	public String getTrailerVideoUrl() {
-		return trailerVideoUrl;
-	}
+    public List<String> getImages() {
+        return images;
+    }
 
-	public void setTrailerVideoUrl(String trailerVideoUrl) {
-		this.trailerVideoUrl = trailerVideoUrl;
-	}
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 
-	public Integer getYear() {
-		return year;
-	}
+    public String getTrailerVideoUrl() {
+        return trailerVideoUrl;
+    }
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    public void setTrailerVideoUrl(String trailerVideoUrl) {
+        this.trailerVideoUrl = trailerVideoUrl;
+    }
 
-	public Integer getDuration() {
-		return duration;
-	}
+    public Integer getYear() {
+        return year;
+    }
 
-	public void setDuration(Integer duration) {
-		this.duration = duration;
-	}
+    public void setYear(Integer year) {
+        this.year = year;
+    }
 
-	public Float getRating() {
-		return rating;
-	}
+    public Integer getDuration() {
+        return duration;
+    }
 
-	public void setRating(Float rating) {
-		this.rating = rating;
-	}
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
-	public Integer getRatingCount() {
-		return ratingCount;
-	}
+    public Float getRating() {
+        return rating;
+    }
 
-	public void setRatingCount(Integer ratingCount) {
-		this.ratingCount = ratingCount;
-	}
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
 
-	public String getDirector() {
-		return director;
-	}
+    public Integer getRatingCount() {
+        return ratingCount;
+    }
 
-	public void setDirector(String director) {
-		this.director = director;
-	}
+    public void setRatingCount(Integer ratingCount) {
+        this.ratingCount = ratingCount;
+    }
 
-	public List<String> getCast() {
-		return cast;
-	}
+    public String getDirector() {
+        return director;
+    }
 
-	public void setCast(List<String> cast) {
-		this.cast = cast;
-	}
+    public void setDirector(String director) {
+        this.director = director;
+    }
 
-	@Override
-	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", synopsis=" + synopsis + ", genre="
-				+ genre + ", images=" + images + ", trailerVideoUrl=" + trailerVideoUrl + ", year=" + year
-				+ ", duration=" + duration + ", rating=" + rating + ", ratingCount=" + ratingCount + ", director="
-				+ director + ", cast=" + cast + "]";
-	}
+    public List<String> getCast() {
+        return cast;
+    }
 
+    public void setCast(List<String> cast) {
+        this.cast = cast;
+    }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", synopsis='" + synopsis + '\'' +
+                ", genre='" + genre + '\'' +
+                ", images=" + images +
+                ", trailerVideoUrl='" + trailerVideoUrl + '\'' +
+                ", year=" + year +
+                ", duration=" + duration +
+                ", rating=" + rating +
+                ", ratingCount=" + ratingCount +
+                ", director='" + director + '\'' +
+                ", cast=" + cast +
+                '}';
+    }
 }

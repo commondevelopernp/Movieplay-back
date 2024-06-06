@@ -40,7 +40,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("api/users");
+		return (web) -> web.ignoring().requestMatchers("/**"); //IMPORTANTE CAMBIAR ESTO
+		//HAY QUE CAMBIARLO PARA SOLO PERMITIR EL auth/login y el swagger
 	}
 
 	@Bean

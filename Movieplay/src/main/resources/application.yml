@@ -1,6 +1,9 @@
 jwt:
   expiration: 36000000
   secret: V3rYs3cR3tK3yF0rJWT
+springdoc:
+  api-docs:
+    path: /api-docs
 
 spring:
   application:
