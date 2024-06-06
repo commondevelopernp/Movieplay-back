@@ -1,0 +1,35 @@
+jwt:
+  expiration: 36000000
+  secret: V3rYs3cR3tK3yF0rJWT
+
+spring:
+  application:
+    name: Movieplay
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: passwordforteam
+    url: jdbc:mysql://localhost:3306/movieplaydb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: movieplayequipo
+  jpa:
+    hibernate:
+      ddl-auto: update
+  security:
+    oauth2:
+      client:
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+        registration:
+          google:
+            authorization-grant-type: authorization_code
+            client-id: 138623808722-ur8aiu48ro7ku3lf2jpo5ethnsb0thcd.apps.googleusercontent.com
+            client-secret: SECRETAPONERACA
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope: profile,email
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
