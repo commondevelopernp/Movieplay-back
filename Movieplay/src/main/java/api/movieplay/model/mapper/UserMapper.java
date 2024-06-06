@@ -14,7 +14,13 @@ public class UserMapper {
 
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
-        dto.setUsername(user.getEmail());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setNickname(user.getNickname());
+        dto.setEmail(user.getEmail());
+        dto.setProfileImage(user.getProfileImage());
+        dto.setRatings(user.getRatings());
+        dto.setFavorited(user.getFavorited());
 
         return dto;
     }
@@ -26,7 +32,13 @@ public class UserMapper {
 
         User user = new User();
         user.setId(dto.getId());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setNickname(dto.getNickname());
         user.setEmail(dto.getEmail());
+        user.setProfileImage(dto.getProfileImage());
+        user.setRatings(dto.getRatings());
+        user.setFavorited(dto.getFavorited());
 
         return user;
     }

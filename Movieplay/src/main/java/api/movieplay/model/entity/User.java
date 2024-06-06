@@ -6,7 +6,20 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-    @Id
+    public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(String firstName, String lastName, String nickname, String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.nickname = nickname;
+		this.email = email;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

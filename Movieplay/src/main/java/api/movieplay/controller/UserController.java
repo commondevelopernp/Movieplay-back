@@ -39,7 +39,6 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         UserDTO user = userOptional.get();
-        user.setUsername(userDetails.getUsername());
         user.setEmail(userDetails.getEmail());
 
         UserDTO updatedUser = userService.saveUser(user);
