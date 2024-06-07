@@ -14,8 +14,9 @@ public class Movie {
 
     @Column(nullable = false,unique=true)
     private String title;
-
+    @Column(length = 500)
     private String subtitle;
+    @Column(length = 500)
     private String synopsis;
     private String genre;
 
