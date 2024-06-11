@@ -1,6 +1,7 @@
 package api.movieplay.controller;
 import api.movieplay.model.entity.User;
-import api.movieplay.service.AuthService;
+import api.movieplay.service.auth.AuthService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

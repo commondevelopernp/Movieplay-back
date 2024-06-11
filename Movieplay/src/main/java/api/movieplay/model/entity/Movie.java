@@ -18,7 +18,8 @@ public class Movie {
     private String subtitle;
     @Column(length = 500)
     private String synopsis;
-    private String genre;
+    @ElementCollection
+    private List<String> genres;
 
     @ElementCollection
     @CollectionTable(name = "movie_images", joinColumns = @JoinColumn(name = "movie_id"))
@@ -30,7 +31,7 @@ public class Movie {
 
     private Integer year;
     private Integer duration;
-    private Float rating;
+    private Integer rating;
 
     @Column(name = "rating_count")
     private Integer ratingCount;
@@ -79,12 +80,12 @@ public class Movie {
         this.synopsis = synopsis;
     }
 
-    public String getGenre() {
-        return genre;
+    public List<String> getGenre() {
+        return genres;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenre(List<String> genre) {
+        this.genres = genre;
     }
 
     public List<String> getImages() {
@@ -119,11 +120,11 @@ public class Movie {
         this.duration = duration;
     }
 
-    public Float getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -158,7 +159,7 @@ public class Movie {
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", synopsis='" + synopsis + '\'' +
-                ", genre='" + genre + '\'' +
+                ", genre='" + genres + '\'' +
                 ", images=" + images +
                 ", trailerVideoUrl='" + trailerVideoUrl + '\'' +
                 ", year=" + year +

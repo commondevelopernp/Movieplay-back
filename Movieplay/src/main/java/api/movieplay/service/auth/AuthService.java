@@ -1,4 +1,4 @@
-package api.movieplay.service;
+package api.movieplay.service.auth;
 
 import api.movieplay.model.entity.User;
 

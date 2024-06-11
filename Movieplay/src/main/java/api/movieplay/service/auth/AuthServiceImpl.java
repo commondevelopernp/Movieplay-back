@@ -1,4 +1,4 @@
-package api.movieplay.service;
+package api.movieplay.service.auth;
 
 import api.movieplay.config.JwtConfig;
 import api.movieplay.model.dao.UserRepository;
