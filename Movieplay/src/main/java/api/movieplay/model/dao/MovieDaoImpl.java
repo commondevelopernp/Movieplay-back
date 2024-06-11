@@ -13,55 +13,57 @@ import java.util.List;
 
 @Repository
 public class MovieDaoImpl implements MovieDao {
-    
-    @PersistenceContext
-    private EntityManager entityManager;
-    @Override
-    @Transactional
-    public List<Movie> getAllMovies(String genre, String title, String actor, String sort, String order,Integer rate, int page, int pageSize) {
-        StringBuilder hql = new StringBuilder("FROM Movie m WHERE 1=1");
-        
-        if (genre != null && !genre.isEmpty()) {
-            hql.append(" AND :genre MEMBER OF m.genres");
-        }
+	    
+	    @PersistenceContext
+	    private EntityManager entityManager;
+	    
+	    @Override
+	    @Transactional
+	    public List<Movie> getAllMovies(String genre, String title, String actor, String sort, String order, Integer rate, int page, int pageSize) {
+	        StringBuilder hql = new StringBuilder("SELECT DISTINCT m FROM Movie m WHERE 1=1");
+	        
+	        if (genre != null && !genre.isEmpty()) {
+	            hql.append(" AND :genre MEMBER OF m.genres");
+	        }
 
-        if (title != null && !title.isEmpty()) {
-            hql.append(" AND m.title LIKE :title");
-        }
-        if (actor != null && !actor.isEmpty()) {
-            hql.append(" AND :actor MEMBER OF m.cast");
-        }
-        if(rate !=null) {
-        	hql.append(" AND m.rating = :rate");
-        }
+	        if (title != null && !title.isEmpty()) {
+	            hql.append(" AND m.title LIKE :title");
+	        }
 
+	        if (rate != null) {
+	            hql.append(" AND m.rating = :rate");
+	        }
 
+	        // Filtrar por actor usando una subconsulta
+	        if (actor != null && !actor.isEmpty()) {
+	            hql.append(" AND EXISTS (SELECT 1 FROM Movie mc JOIN mc.cast c WHERE mc.id = m.id AND c = :actor)");
+	        }
 
+	        // Agregar la cláusula ORDER BY si se especifica el parámetro de ordenamiento
+	        if (sort != null && !sort.isEmpty()) {
+	            hql.append(" ORDER BY m.").append(sort).append(" ").append(order);
+	        }
 
-        // Agrega la cláusula ORDER BY solo si el parámetro sort está presente
-        if (sort != null && !sort.isEmpty()) {
-            hql.append(" ORDER BY m.").append(sort).append(" ").append(order);
-        }
+	        TypedQuery<Movie> query = entityManager.createQuery(hql.toString(), Movie.class);
+	        query.setFirstResult((page - 1) * pageSize);
+	        query.setMaxResults(pageSize);
 
-        TypedQuery<Movie> query = entityManager.createQuery(hql.toString(), Movie.class);
-        query.setFirstResult((page - 1) * pageSize);
-        query.setMaxResults(pageSize);
+	        if (genre != null && !genre.isEmpty()) {
+	            query.setParameter("genre", genre);
+	        }
+	        if (title != null && !title.isEmpty()) {
+	            query.setParameter("title", "%" + title + "%");
+	        }
+	        if (actor != null && !actor.isEmpty()) {
+	            query.setParameter("actor", actor);
+	        }
+	        if (rate != null) {
+	            query.setParameter("rate", rate);
+	        }
 
-        if (genre != null && !genre.isEmpty()) {
-            query.setParameter("genre", genre);
-        }
-        if (title != null && !title.isEmpty()) {
-            query.setParameter("title", "%" + title + "%");
-        }
-        if (actor != null && !actor.isEmpty()) {
-            query.setParameter("actor", "%" + actor + "%");
-        }
-        if (rate != null) {
-            query.setParameter("rate", rate);
-        }
-
-        return query.getResultList();
-    }
+	        return query.getResultList();
+	    }
+	
 
     @Override
     @Transactional
