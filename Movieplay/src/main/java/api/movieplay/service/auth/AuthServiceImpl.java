@@ -1,14 +1,14 @@
 package api.movieplay.service.auth;
 
-import api.movieplay.config.JwtConfig;
 import api.movieplay.model.dao.UserRepository;
 import api.movieplay.model.entity.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import api.movieplay.config.JwtConfig;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +18,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtConfig jwtConfig; 
+
 
     @Autowired
-    private JwtConfig jwtConfig;
+    private BlacklistedTokenService blacklistedTokenService;
 
     @Override
     public User authenticate(String oauthToken) {
@@ -56,13 +59,39 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void logout(String token) {
-        // Lógica para invalidar el JWT (por ejemplo, almacenar en una lista negra)
+        // Invalidar el JWT agregándolo a la lista negra
+        blacklistedTokenService.blacklistToken(token);
     }
 
     @Override
-    public String refresh(String refreshToken) {
-        // Lógica para refrescar el token y generar uno nuevo
-        return "newJwtToken";
+    public String refresh(String refreshToken) throws InvalidRefreshTokenException {
+        // Validar el refresh token
+        if (blacklistedTokenService.isTokenBlacklisted(refreshToken)) {
+            throw new InvalidRefreshTokenException("Refresh token is blacklisted");
+        }
+
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                .setSigningKey(jwtConfig.getSecret().getBytes()) // Obtener la clave secreta como un array de bytes
+                .parseClaimsJws(refreshToken)
+                .getBody();
+        } catch (Exception e) {
+            throw new InvalidRefreshTokenException("Refresh token is invalid");
+        }
+
+        // Verificar la expiración del refresh token
+        if (claims.getExpiration().before(new Date())) {
+            throw new InvalidRefreshTokenException("Refresh token is expired");
+        }
+
+        // Obtener el usuario a partir de las claims del refresh token
+        String userId = claims.getSubject();
+        User user = userRepository.findById(Long.parseLong(userId))
+            .orElseThrow(() -> new InvalidRefreshTokenException("User not found"));
+
+        // Generar un nuevo JWT
+        return generateJwt(user);
     }
 
     @Override
@@ -77,6 +106,15 @@ public class AuthServiceImpl implements AuthService {
                 .setSubject(user.getId().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
+                .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
+                .compact();
+    }
+
+    public String generateRefreshToken(User user) {
+        return Jwts.builder()
+                .setSubject(user.getId().toString())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getRefreshExpiration()))
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
                 .compact();
     }

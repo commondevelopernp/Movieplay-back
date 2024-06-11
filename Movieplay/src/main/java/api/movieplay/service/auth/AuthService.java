@@ -8,7 +8,7 @@ public interface AuthService {
 
     void logout(String token);
 
-    String refresh(String refreshToken);
+    String refresh(String refreshToken) throws InvalidRefreshTokenException;
 
     String generateJwt(User user);
 }

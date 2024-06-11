@@ -1,4 +1,5 @@
 package api.movieplay.config;
+
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.crypto.SecretKey;
+import java.util.Base64;
 
+/**
+ * Configura la seguridad de la aplicación.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -32,16 +38,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 				(authorize) -> authorize.anyRequest().authenticated())
 				.cors()
 				.and()
-				.csrf().disable();
-
+				.csrf().disable()
+				.addFilterBefore(jwtAuth(), UsernamePasswordAuthenticationFilter.class);
 
 	return http.build();
 	}
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("/**"); //IMPORTANTE CAMBIAR ESTO
-		//HAY QUE CAMBIARLO PARA SOLO PERMITIR EL auth/login y el swagger
+		return (web) -> web.ignoring().requestMatchers("auth/login");
 	}
 
 	@Bean
@@ -55,4 +60,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 						.allowCredentials(true);
 			}
 		};
-	}}
+	}
+
+	@Bean
+	public JwtAuthFilter jwtAuth() {
+		return new JwtAuthFilter(secretKey());
+	}
+
+	@Bean
+	public SecretKey secretKey() {
+		SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+		return secretKey;
+	}
+}
