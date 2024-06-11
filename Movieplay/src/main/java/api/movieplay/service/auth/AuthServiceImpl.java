@@ -37,13 +37,17 @@ public class AuthServiceImpl implements AuthService {
         String email = (String) response.get("email");
         String firstName = (String) response.get("given_name");
         String lastName = (String) response.get("family_name");
+        String nickname = (String) response.get("name");
+        String profilepic = (String) response.get("picture");
 
         User user = userRepository.findByEmail(email);
         if (user == null) {
             user = new User();
             user.setEmail(email);
+            user.setProfileImage(profilepic);
             user.setFirstName(firstName);
             user.setLastName(lastName);
+            user.setNickname(nickname);
             userRepository.save(user);
         }
 
