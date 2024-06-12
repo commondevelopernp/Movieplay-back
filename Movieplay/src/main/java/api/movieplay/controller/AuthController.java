@@ -1,7 +1,9 @@
 package api.movieplay.controller;
 
+import api.movieplay.model.entity.AuthTokens;
 import api.movieplay.model.entity.User;
 import api.movieplay.service.auth.AuthServiceImpl;
+import api.movieplay.service.auth.InvalidRefreshTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +38,15 @@ public class AuthController {
 
         if (refreshToken != null && !refreshToken.isEmpty()) {
             try {
-                String newToken = authService.refresh(refreshToken);
-                return ResponseEntity.ok(Map.of("accessToken", newToken));
+                AuthTokens newTokens = authService.refresh(refreshToken);
+                return ResponseEntity.ok(Map.of("accessToken", newTokens.getAccessToken(), "refreshToken", newTokens.getRefreshToken()));
+            } catch (InvalidRefreshTokenException e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Refresh token is expired or invalid");
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid refresh token");
             }
         }
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Refresh token is missing");
     }
 }
-

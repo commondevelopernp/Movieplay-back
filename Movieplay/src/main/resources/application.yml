@@ -1,16 +1,17 @@
+jwt:
+  secret: hZJCXKFypHxDYXwqDhVsN7vR95YKy6Mv
+  expiration: 3600 # Tiempo en segundos (por ejemplo, 3600 segundos = 1 hora)
+  refreshExpiration: 86400 # Tiempo en segundos (por ejemplo, 86400 segundos = 1 día)
 
-springdoc:
-  api-docs:
-    path: /api-docs
+
 
 spring:
   application:
     name: Movieplay
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: passwordforteam
     url: jdbc:mysql://localhost:3306/movieplaydb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
-    username: movieplayequipo
+    username: root
   jpa:
     hibernate:
       ddl-auto: update

@@ -11,12 +11,14 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String firstName, String lastName, String nickname, String email) {
+	public User(String firstName, String lastName, String nickname, String email,String profileImage,String refresh) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.nickname = nickname;
 		this.email = email;
+		this.refresh = refresh;
+		this.profileImage = profileImage;
 	}
 
 	@Id
@@ -34,10 +36,11 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String email;
-
+    
     @Column(name = "profile_image")
     private String profileImage;
-
+    @Column(name = "refresh")
+    private String refresh;
     @ElementCollection
     @CollectionTable(name = "user_ratings", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "movie_id")
@@ -110,6 +113,13 @@ public class User {
 
 	public void setFavorited(List<Integer> favorited) {
 		this.favorited = favorited;
+	}
+	public String getRefreshToken() {
+		// TODO Auto-generated method stub
+		return this.refresh;
+	}
+	public void setRefreshToken(String refresh) {
+		this.refresh=refresh;
 	}
 
 	@Override

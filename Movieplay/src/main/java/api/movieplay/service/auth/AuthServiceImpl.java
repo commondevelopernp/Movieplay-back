@@ -1,6 +1,7 @@
 package api.movieplay.service.auth;
 
 import api.movieplay.model.dao.UserRepository;
+import api.movieplay.model.entity.AuthTokens;
 import api.movieplay.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,9 +19,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private JwtConfig jwtConfig; 
 
+    @Autowired
+    private JwtConfig jwtConfig;
 
     @Autowired
     private BlacklistedTokenService blacklistedTokenService;
@@ -51,9 +52,19 @@ public class AuthServiceImpl implements AuthService {
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setNickname(nickname);
-            userRepository.save(user);
         }
 
+        // Generar nuevo JWT y Refresh Token
+        String newAccessToken = generateJwt(user);
+        String newRefreshToken = generateRefreshToken(user);
+
+        // Almacenar el Refresh Token en el usuario
+        user.setRefreshToken(newRefreshToken);
+
+        // Guardar o actualizar el usuario en la base de datos
+        userRepository.save(user);
+
+        // Devolver el usuario junto con los tokens
         return user;
     }
 
@@ -64,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String refresh(String refreshToken) throws InvalidRefreshTokenException {
+    public AuthTokens refresh(String refreshToken) throws InvalidRefreshTokenException {
         // Validar el refresh token
         if (blacklistedTokenService.isTokenBlacklisted(refreshToken)) {
             throw new InvalidRefreshTokenException("Refresh token is blacklisted");
@@ -73,9 +84,9 @@ public class AuthServiceImpl implements AuthService {
         Claims claims;
         try {
             claims = Jwts.parser()
-                .setSigningKey(jwtConfig.getSecret().getBytes()) // Obtener la clave secreta como un array de bytes
-                .parseClaimsJws(refreshToken)
-                .getBody();
+                    .setSigningKey(jwtConfig.getSecret().getBytes()) // Obtener la clave secreta como un array de bytes
+                    .parseClaimsJws(refreshToken)
+                    .getBody();
         } catch (Exception e) {
             throw new InvalidRefreshTokenException("Refresh token is invalid");
         }
@@ -88,10 +99,23 @@ public class AuthServiceImpl implements AuthService {
         // Obtener el usuario a partir de las claims del refresh token
         String userId = claims.getSubject();
         User user = userRepository.findById(Long.parseLong(userId))
-            .orElseThrow(() -> new InvalidRefreshTokenException("User not found"));
+                .orElseThrow(() -> new InvalidRefreshTokenException("User not found"));
 
-        // Generar un nuevo JWT
-        return generateJwt(user);
+        // Verificar si el refresh token enviado coincide con el almacenado en el usuario
+        if (!refreshToken.equals(user.getRefreshToken())) {
+            throw new InvalidRefreshTokenException("Refresh token does not match");
+        }
+
+        // Generar un nuevo JWT y Refresh Token
+        String newAccessToken = generateJwt(user);
+        String newRefreshToken = generateRefreshToken(user);
+
+        // Actualizar el refresh token en el usuario
+        user.setRefreshToken(newRefreshToken);
+        userRepository.save(user);
+
+        // Devolver ambos tokens
+        return new AuthTokens(newAccessToken, newRefreshToken);
     }
 
     @Override

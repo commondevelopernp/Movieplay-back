@@ -39,12 +39,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (token != null && validateToken(token)) {
                 String username = extractUsernameFromToken(token);
-                List<GrantedAuthority> authorities = extractRoleFromToken(token);
-
                 if (username != null) {
 
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            username, null, authorities);
+                            username, null);
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -113,21 +111,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
     }
 
-    private List<GrantedAuthority> extractRoleFromToken(String token) {
-        try {
-                Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
-
-                String rol = claims.get("rol", String.class);
-
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(rol));
-
-                return authorities;
-
-        } catch (Exception e) {
-            // Manejar cualquier excepción que pueda ocurrir al analizar el token
-            return null;
-        }
-    }
 }
 

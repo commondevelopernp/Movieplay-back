@@ -2,6 +2,8 @@ package api.movieplay.config;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.security.PermitAll;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -34,19 +36,22 @@ import java.util.Base64;
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
-
 				(authorize) -> authorize.anyRequest().authenticated())
 				.cors()
 				.and()
 				.csrf().disable()
-				.addFilterBefore(jwtAuth(), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtAuth(), UsernamePasswordAuthenticationFilter.class)
+				
+;
 
 	return http.build();
 	}
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("auth/login");
+		return (web) -> web.ignoring()
+				.requestMatchers("auth/login","swagger-ui").anyRequest()
+				;
 	}
 
 	@Bean
