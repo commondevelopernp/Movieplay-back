@@ -13,6 +13,7 @@ import api.movieplay.config.JwtConfig;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -44,16 +45,16 @@ public class AuthServiceImpl implements AuthService {
         String nickname = (String) response.get("name");
         String profilepic = (String) response.get("picture");
 
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            user = new User();
-            user.setEmail(email);
-            user.setProfileImage(profilepic);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setNickname(nickname);
-        }
-
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User user = optionalUser.orElseGet(() -> {
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setProfileImage(profilepic);
+            newUser.setFirstName(firstName);
+            newUser.setLastName(lastName);
+            newUser.setNickname(nickname);
+            return newUser;
+        });
         // Generar nuevo JWT y Refresh Token
         String newAccessToken = generateJwt(user);
         String newRefreshToken = generateRefreshToken(user);
@@ -97,8 +98,8 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // Obtener el usuario a partir de las claims del refresh token
-        String userId = claims.getSubject();
-        User user = userRepository.findById(Long.parseLong(userId))
+        String userEmail = claims.getSubject();
+        User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new InvalidRefreshTokenException("User not found"));
 
         // Verificar si el refresh token enviado coincide con el almacenado en el usuario
@@ -127,7 +128,7 @@ public class AuthServiceImpl implements AuthService {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(user.getId().toString())
+                .setSubject(user.getEmail().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
@@ -136,7 +137,7 @@ public class AuthServiceImpl implements AuthService {
 
     public String generateRefreshToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getId().toString())
+                .setSubject(user.getEmail().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getRefreshExpiration()))
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getSecret())
