@@ -39,7 +39,11 @@ public class UserController {
         if (!userOptional.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+
         UserDTO user = userOptional.get();
+        user.setNickname(userDetails.getNickname());
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
 
         UserDTO updatedUser = userService.saveUser(user);

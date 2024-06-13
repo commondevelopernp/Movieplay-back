@@ -45,6 +45,7 @@ public class AuthServiceImpl implements AuthService {
         String profilepic = (String) response.get("picture");
 
         User user = userRepository.findByEmail(email);
+
         if (user == null) {
             user = new User();
             user.setEmail(email);
@@ -54,15 +55,15 @@ public class AuthServiceImpl implements AuthService {
             user.setNickname(nickname);
         }
 
+        // Guardar o actualizar el usuario en la base de datos
+        var currentUser = userRepository.save(user);
+
         // Generar nuevo JWT y Refresh Token
-        String newAccessToken = generateJwt(user);
-        String newRefreshToken = generateRefreshToken(user);
+        String newAccessToken = generateJwt(currentUser);
+        String newRefreshToken = generateRefreshToken(currentUser);
 
         // Almacenar el Refresh Token en el usuario
         user.setRefreshToken(newRefreshToken);
-
-        // Guardar o actualizar el usuario en la base de datos
-        userRepository.save(user);
 
         // Devolver el usuario junto con los tokens
         return user;

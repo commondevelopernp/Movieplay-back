@@ -1,5 +1,5 @@
 jwt:
-  secret: hZJCXKFypHxDYXwqDhVsN7vR95YKy6Mv
+  secret: MzI3ZjExYmQzNTU1NmM1MTQ3M2YxODliMzQxMzY2MDg=
   expiration: 3600 # Tiempo en segundos (por ejemplo, 3600 segundos = 1 hora)
   refreshExpiration: 86400 # Tiempo en segundos (por ejemplo, 86400 segundos = 1 día)
 
@@ -10,9 +10,9 @@ spring:
     name: Movieplay
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/movieplaydb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
-    username: root  # Usuario por defecto de MySQL en desarrollo
-
+    username: root
+    url: jdbc:mysql://localhost:3306/movieplaydb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    password: martin
   sql:
     init:
       mode: always  # Modo de inicialización para crear la base de datos si no existe 
@@ -31,8 +31,8 @@ spring:
         registration:
           google:
             authorization-grant-type: authorization_code
-            client-id: 138623808722-ur8aiu48ro7ku3lf2jpo5ethnsb0thcd.apps.googleusercontent.com
-            client-secret: SECRETAPONERACA
+            client-id: 571491722298-g91suheo3kcimlqkcnhs5cjfu3sefub1.apps.googleusercontent.com
+            client-secret: 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
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             scope: profile,email
   servlet:
