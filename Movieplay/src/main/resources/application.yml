@@ -28,7 +28,7 @@ spring:
         registration:
           google:
             authorization-grant-type: authorization_code
-            client-id: 571491722298-g91suheo3kcimlqkcnhs5cjfu3sefub1.apps.googleusercontent.com
+
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: profile,email
   servlet:
