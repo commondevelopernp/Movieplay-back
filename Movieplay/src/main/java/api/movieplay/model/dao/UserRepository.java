@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByEmail(String email);
 	Optional<User> findById(Long id);
-	Optional<User> save(User user);
+	User save(User user);
 	void deleteById(Long id);
 	
 }
