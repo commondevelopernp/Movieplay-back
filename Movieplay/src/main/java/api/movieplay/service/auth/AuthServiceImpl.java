@@ -59,8 +59,7 @@ public class AuthServiceImpl implements AuthService {
             user.setNickname(nickname);
         }
 
-        // Guardar o actualizar el usuario en la base de datos
-        var currentUser = userRepository.save(user);
+
 
         // Generar nuevo JWT y Refresh Token
         String newAccessToken = generateJwt(currentUser);
@@ -68,7 +67,8 @@ public class AuthServiceImpl implements AuthService {
 
         // Almacenar el Refresh Token en el usuario
         user.setRefreshToken(newRefreshToken);
-
+        // Guardar o actualizar el usuario en la base de datos
+        var currentUser = userRepository.save(user);
         // Devolver el usuario junto con los tokens
         return user;
     }
