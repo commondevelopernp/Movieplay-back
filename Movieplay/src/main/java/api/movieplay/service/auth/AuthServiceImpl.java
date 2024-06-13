@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
             user.setLastName(lastName);
             user.setNickname(nickname);
         }
-        var currentUser = userRepository.save(user);
+        var userguardado = userRepository.save(user);
 
 
         // Generar nuevo JWT y Refresh Token
