@@ -45,9 +45,12 @@ public class AuthServiceImpl implements AuthService {
         String nickname = (String) response.get("name");
         String profilepic = (String) response.get("picture");
 
-        User user = userRepository.findByEmail(email);
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        User user;
 
-        if (user == null) {
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
             user = new User();
             user.setEmail(email);
             user.setProfileImage(profilepic);
