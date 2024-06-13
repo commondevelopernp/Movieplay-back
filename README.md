@@ -2,7 +2,7 @@ Mancuello Augusto Ariel
 Martin Alejandro Silva
 Nicolas Porchia
 Facundo De Paul
-Mariano
+Mariano Sorbo
 ### Instrucciones:
 
 1. **Entra a la carpeta `movieplay`.**
