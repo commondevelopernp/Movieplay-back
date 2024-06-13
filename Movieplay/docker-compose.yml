@@ -1,18 +1,30 @@
 version: '3.8'
 
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: martin
+      MYSQL_DATABASE: movieplaydb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: martin
+    volumes:
+      - mysql-data:/var/lib/mysql
+
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
+    container_name: movieplay_app
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://root:abGLdnkLBIKZRVLHkLLooODHsvsACFaT@viaduct.proxy.rlwy.net:40406/movieplaydb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/movieplaydb?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: martin
-      JWT_SECRET: MzI3ZjExYmQzNTU1NmM1MTQ3M2YxODliMzQxMzY2MDg=
-      JWT_EXPIRATION: 3600
-      JWT_REFRESH_EXPIRATION: 86400
-      GOOGLE_CLIENT_ID: 571491722298-g91suheo3kcimlqkcnhs5cjfu3sefub1.apps.googleusercontent.com
-      GOOGLE_CLIENT_SECRET: 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
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
