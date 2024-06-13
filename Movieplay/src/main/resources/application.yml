@@ -1,4 +1,5 @@
 jwt:
+  secret: MzI3ZjExYmQzNTU1NmM1MTQ3M2YxODliMzQxMzY2MDg=
   expiration: 3600 # Tiempo en segundos (por ejemplo, 3600 segundos = 1 hora)
   refreshExpiration: 86400 # Tiempo en segundos (por ejemplo, 86400 segundos = 1 día)
 
@@ -28,7 +29,8 @@ spring:
         registration:
           google:
             authorization-grant-type: authorization_code
-
+            client-id: 571491722298-g91suheo3kcimlqkcnhs5cjfu3sefub1.apps.googleusercontent.com
+            client-secret: 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
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: profile,email
   servlet:
