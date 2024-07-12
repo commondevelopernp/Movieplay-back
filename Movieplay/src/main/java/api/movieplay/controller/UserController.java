@@ -45,7 +45,8 @@ public class UserController {
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
-
+        user.setProfileImage(userDetails.getProfileImage());
+        user.setRatings(userDetails.getRatings());
         UserDTO updatedUser = userService.saveUser(user);
         return ResponseEntity.ok(updatedUser);
     }
