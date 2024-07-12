@@ -7,9 +7,9 @@ version: '3.8'
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://root:DecqjxZMXYaRZESLJgYtKhKiRcMrVthM@viaduct.proxy.rlwy.net:55959/railway?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://root:HCwcHiMSQUlotLiEfGGtJLeXVsuslDMU@viaduct.proxy.rlwy.net:58844/railway?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: DecqjxZMXYaRZESLJgYtKhKiRcMrVthM
+      SPRING_DATASOURCE_PASSWORD: HCwcHiMSQUlotLiEfGGtJLeXVsuslDMU
 
 volumes:
   mysql_data:
