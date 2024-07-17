@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .antMatchers("/auth/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Permitir acceso a estas rutas
+                .antMatchers("/auth/login", "/swagger-ui/**", "/v3/api-docs/**","/api/**").permitAll() // Permitir acceso a estas rutas
                 .anyRequest().authenticated()
             )
             .cors()
