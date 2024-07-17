@@ -61,7 +61,7 @@ import java.util.Base64;
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("https://movieplay-back-production-2979.up.railway.app/") // Cambia esto al origen de tu frontend
+						.allowedOrigins("https://movieplay-back-production-c7dd.up.railway.app/") // Cambia esto al origen de tu frontend
 						.allowedMethods("GET", "POST", "PUT", "DELETE") // Especifica los métodos permitidos
 						.allowCredentials(true);
 			}
