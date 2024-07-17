@@ -50,7 +50,7 @@ import java.util.Base64;
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring()
-				.requestMatchers("auth/login","/swagger-ui/**", "/v3/api-docs/**")
+				.requestMatchers("auth/login","/swagger-ui/**", "/v3/api-docs/**","/api/**")
 				//,"/api/**"
 				;
 	}
