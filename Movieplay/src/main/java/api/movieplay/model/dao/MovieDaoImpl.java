@@ -55,7 +55,7 @@ public class MovieDaoImpl implements MovieDao {
 	            query.setParameter("title", "%" + title + "%");
 	        }
 	        if (actor != null && !actor.isEmpty()) {
-	            query.setParameter("actor", title);
+	            query.setParameter("actor", "%" + title + "%");
 	        }
 	        if (rate != null) {
 	            query.setParameter("rate", rate);
