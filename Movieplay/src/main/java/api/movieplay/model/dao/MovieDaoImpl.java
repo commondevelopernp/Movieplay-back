@@ -36,7 +36,7 @@ public class MovieDaoImpl implements MovieDao {
 
 	        // Filtrar por actor usando una subconsulta
 	        if (actor != null && !actor.isEmpty()) {
-	            hql.append(" AND EXISTS (SELECT 1 FROM Movie mc JOIN mc.cast c WHERE mc.id = m.id AND c = :actor)");
+	            hql.append(" AND EXISTS (SELECT 1 FROM Movie mc JOIN mc.cast c WHERE mc.id = m.id AND LIKE :actor)");
 	        }
 
 	        // Agregar la cláusula ORDER BY si se especifica el parámetro de ordenamiento
@@ -55,7 +55,7 @@ public class MovieDaoImpl implements MovieDao {
 	            query.setParameter("title", "%" + title + "%");
 	        }
 	        if (actor != null && !actor.isEmpty()) {
-	            query.setParameter("actor", actor);
+	            query.setParameter("actor", title);
 	        }
 	        if (rate != null) {
 	            query.setParameter("rate", rate);
