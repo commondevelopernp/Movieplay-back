@@ -33,14 +33,21 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie getMovieById(@PathVariable Long id) {
-        return movieService.getMovieById(id);
+    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
+        Movie movie = movieService.getMovieById(id);
+        if (movie != null) {
+            return ResponseEntity.ok(movie);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
+        movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
+        Movie updatedMovie = movieService.saveMovie(movie);
+        return ResponseEntity.ok(updatedMovie);
     }
 
-    @PutMapping("/{id}")
-    public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
-        movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
-        return movieService.saveMovie(movie);
-    }
 }
 
