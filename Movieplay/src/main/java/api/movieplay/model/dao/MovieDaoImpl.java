@@ -67,7 +67,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     @Transactional
-    public Movie getMovieById(String id) {
+    public Movie getMovieById(Long id) {
         return entityManager.find(Movie.class, id);
     }
 
