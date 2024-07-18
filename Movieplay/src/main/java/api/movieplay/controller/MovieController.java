@@ -2,7 +2,7 @@ package api.movieplay.controller;
 
 import api.movieplay.model.entity.Movie;
 import api.movieplay.service.movie.MovieServiceImpl;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
