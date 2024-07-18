@@ -1,5 +1,6 @@
 package api.movieplay.controller;
 
+import java.util.Optional; // Importar Optional
 import api.movieplay.service.user.UserService;
 import api.movieplay.model.entity.Movie;
 import api.movieplay.service.movie.MovieServiceImpl;
