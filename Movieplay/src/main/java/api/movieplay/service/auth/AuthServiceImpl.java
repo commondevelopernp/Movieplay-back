@@ -130,7 +130,6 @@ public class AuthServiceImpl implements AuthService {
         claims.put("firstName", user.getFirstName());
         claims.put("lastName", user.getLastName());
         claims.put("id",user.getId());
-        claims.put("refresh",user.getRefreshToken());
         claims.put("ratings",user.getRatings());
         claims.put("favorited",user.getFavorited());
         claims.put("user",user);
