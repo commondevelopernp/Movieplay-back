@@ -133,7 +133,7 @@ public class AuthServiceImpl implements AuthService {
         claims.put("refresh",user.getRefreshToken());
         claims.put("ratings",user.getRatings());
         claims.put("favorited",user.getFavorited());
-        claims.put("user",user));
+        claims.put("user",user);
 
         return Jwts.builder()
                 .setClaims(claims)
