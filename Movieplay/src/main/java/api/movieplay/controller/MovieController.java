@@ -1,14 +1,15 @@
 package api.movieplay.controller;
 
-import java.util.Optional; // Importar Optional
-import api.movieplay.service.user.UserService;
 import api.movieplay.model.entity.Movie;
+import api.movieplay.model.entity.User;
 import api.movieplay.service.movie.MovieServiceImpl;
-import org.springframework.http.ResponseEntity;
+import api.movieplay.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import api.movieplay.model.entity.User; // Asegúrate de importar esto
+
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -45,7 +46,8 @@ public class MovieController {
             return ResponseEntity.notFound().build();
         }
     }
-     @GetMapping("/favorites/{id}")
+
+    @GetMapping("/favorites/{id}")
     public ResponseEntity<List<Movie>> getFavoritesUser(@PathVariable Long id) {
         Optional<User> userOptional = userService.findUserById(id);
         if (userOptional.isPresent()) {
@@ -60,12 +62,11 @@ public class MovieController {
             return ResponseEntity.notFound().build();
         }
     }
-}
+
     @PutMapping("/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
         movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
         Movie updatedMovie = movieService.saveMovie(movie);
         return ResponseEntity.ok(updatedMovie);
     }
-
 }
