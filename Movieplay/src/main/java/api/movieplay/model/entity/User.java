@@ -44,7 +44,7 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "user_ratings", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "movie_id")
-    private List<Integer> ratings;
+    private List<Long> ratings;
 
     @ElementCollection
     @CollectionTable(name = "user_favorited", joinColumns = @JoinColumn(name = "user_id"))
