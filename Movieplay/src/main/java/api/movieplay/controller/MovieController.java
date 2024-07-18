@@ -7,7 +7,7 @@ import api.movieplay.service.movie.MovieServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import api.movieplay.model.entity.User; // Asegúrate de importar esto
 import java.util.List;
 
 @RestController
