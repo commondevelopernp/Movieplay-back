@@ -70,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
         // Guardar o actualizar el usuario en la base de datos
         var userGuardado = userRepository.save(user);
         // Devolver el usuario junto con los tokens
-        return user;
+        return userGuardado;
     }
 
     @Override
