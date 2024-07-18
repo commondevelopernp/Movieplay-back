@@ -33,12 +33,12 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie getMovieById(@PathVariable String id) {
+    public Movie getMovieById(@PathVariable Long id) {
         return movieService.getMovieById(id);
     }
 
     @PutMapping("/{id}")
-    public Movie updateMovie(@PathVariable String id, @RequestBody Movie movie) {
+    public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
         movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
         return movieService.saveMovie(movie);
     }
