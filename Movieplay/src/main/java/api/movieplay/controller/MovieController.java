@@ -1,5 +1,6 @@
 package api.movieplay.controller;
 
+import api.movieplay.service.user.UserService;
 import api.movieplay.model.entity.Movie;
 import api.movieplay.service.movie.MovieServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ public class MovieController {
 
     @Autowired
     private MovieServiceImpl movieService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public List<Movie> getAllMovies(@RequestParam(required = false) String genre,
@@ -41,7 +44,18 @@ public class MovieController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+ @GetMapping("/favorites/{id}")
+    public ResponseEntity<List<Movie>> getFavoritesUser(@PathVariable Long id) {
+        Optional<User> userOptional = userService.findUserById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            List<Long> favoriteIds = user.getFavorited();
+            List<Movie> favoriteMovies = movieService.getMoviesByIds(favoriteIds);
+            return ResponseEntity.ok(favoriteMovies);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
         movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
