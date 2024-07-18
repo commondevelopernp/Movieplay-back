@@ -48,20 +48,22 @@ public class MovieController {
     }
 
     @GetMapping("/favorites/{id}")
-    public ResponseEntity<List<Movie>> getFavoritesUser(@PathVariable Long id) {
-        Optional<User> userOptional = userService.findUserById(id);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            List<Movie> favoriteMovies = user.getFavorited(); // Asegúrate de que este método existe y devuelve List<Movie>
-            if (favoriteMovies != null && !favoriteMovies.isEmpty()) {
-                return ResponseEntity.ok(favoriteMovies);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+public ResponseEntity<List<Movie>> getFavoritesUser(@PathVariable Long id) {
+    Optional<User> userOptional = userService.findUserById(id);
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        List<Long> favoriteMovieIds = user.getFavorited();
+        if (favoriteMovieIds != null && !favoriteMovieIds.isEmpty()) {
+            List<Movie> favoriteMovies = movieService.getMoviesByIds(favoriteMovieIds);
+            return ResponseEntity.ok(favoriteMovies);
         } else {
             return ResponseEntity.notFound().build();
         }
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
