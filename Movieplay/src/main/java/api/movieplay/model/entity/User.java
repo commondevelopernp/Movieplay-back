@@ -49,7 +49,7 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "user_favorited", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "movie_id")
-    private List<Integer> favorited;
+    private List<Long> favorited;
 
 	public Long getId() {
 		return id;
@@ -99,19 +99,19 @@ public class User {
 		this.profileImage = profileImage;
 	}
 
-	public List<Integer> getRatings() {
+	public List<Long> getRatings() {
 		return ratings;
 	}
 
-	public void setRatings(List<Integer> ratings) {
+	public void setRatings(List<Long> ratings) {
 		this.ratings = ratings;
 	}
 
-	public List<Integer> getFavorited() {
+	public List<Long> getFavorited() {
 		return favorited;
 	}
 
-	public void setFavorited(List<Integer> favorited) {
+	public void setFavorited(List<Long> favorited) {
 		this.favorited = favorited;
 	}
 	public String getRefreshToken() {
