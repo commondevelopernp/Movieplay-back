@@ -33,7 +33,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable String id) {
+    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
         Movie movie = movieService.getMovieById(id);
         if (movie != null) {
             return ResponseEntity.ok(movie);
@@ -43,7 +43,7 @@ public class MovieController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable String id, @RequestBody Movie movie) {
+    public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
         movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
         Movie updatedMovie = movieService.saveMovie(movie);
         return ResponseEntity.ok(updatedMovie);
