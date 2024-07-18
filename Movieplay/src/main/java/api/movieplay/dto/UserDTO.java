@@ -85,7 +85,7 @@ public class UserDTO {
         return favorited;
     }
 
-    public void setFavorited(List<Integer> favorited) {
+    public void setFavorited(List<Long> favorited) {
         this.favorited = favorited;
     }
 
