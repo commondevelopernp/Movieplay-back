@@ -67,7 +67,7 @@ public ResponseEntity<List<Movie>> getFavoritesUser(@PathVariable Long id) {
 
     @PutMapping("/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
-        movie.setId(id); // Asegúrate de que el ID de la película sea el mismo que el del path variable
+        movie.setId(id); // Asegúrate de que el ID de l a película sea el mismo que el del path variable
         Movie updatedMovie = movieService.saveMovie(movie);
         return ResponseEntity.ok(updatedMovie);
     }
