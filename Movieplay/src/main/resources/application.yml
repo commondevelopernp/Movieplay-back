@@ -1,6 +1,6 @@
 jwt:
   secret: MzI3ZjExYmQzNTU1NmM1MTQ3M2YxODliMzQxMzY2MDg=
-  expiration: 3600 # Tiempo en segundos (por ejemplo, 3600 segundos = 1 hora)
+  expiration: 36000 # Tiempo en segundos (por ejemplo, 3600 segundos = 1 hora)
   refreshExpiration: 86400 # Tiempo en segundos (por ejemplo, 86400 segundos = 1 día)
 
 spring:
