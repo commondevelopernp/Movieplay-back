@@ -21,7 +21,6 @@ public class UserMapper {
         dto.setProfileImage(user.getProfileImage());
         dto.setRatings(user.getRatings());
         dto.setFavorited(user.getFavorited());
-        dto.setRefreshToken(user.getRefreshToken());
         return dto;
     }
 
@@ -39,7 +38,6 @@ public class UserMapper {
         user.setProfileImage(dto.getProfileImage());
         user.setRatings(dto.getRatings());
         user.setFavorited(dto.getFavorited());
-        user.setRefreshToken(dto.getRefreshToken());
 
         return user;
     }
