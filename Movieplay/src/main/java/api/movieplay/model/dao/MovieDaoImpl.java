@@ -82,4 +82,15 @@ public class MovieDaoImpl implements MovieDao {
         return movie;
     }
 
+
+    @Override
+    @Transactional
+    public List<Movie> findAllByIdIn(List<Long> ids) {
+        TypedQuery<Movie> query = entityManager.createQuery(
+                "SELECT m FROM Movie m WHERE m.id IN :ids", Movie.class);
+        query.setParameter("ids", ids);
+        return query.getResultList();
+    }
+
+
 }

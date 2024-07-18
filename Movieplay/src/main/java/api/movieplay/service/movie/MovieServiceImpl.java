@@ -27,7 +27,7 @@ public class MovieServiceImpl implements MovieService {
     }
     @Override
     public List<Movie> getMoviesByIds(List<Long> ids) {
-        return movieDao.findAllById(ids);
+        return movieDao.findAllByIdIn(ids);
     }
 	@Override
 	public Movie saveMovie(Movie movie) {
