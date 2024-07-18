@@ -21,7 +21,6 @@ public class UserDTO {
     private String profileImage;
     private List<Integer> ratings;
     private List<Integer> favorited;
-    private String refresh;
 	
     // Constructor
     public UserDTO() {}
@@ -53,12 +52,6 @@ public class UserDTO {
 
     public String getNickname() {
         return nickname;
-    }
-    public String getRefreshToken() {
-        return refresh;
-    }
-    public void setRefreshToken(String refresht) {
-        this.refresh = refresht;
     }
     public void setNickname(String nickname) {
         this.nickname = nickname;
