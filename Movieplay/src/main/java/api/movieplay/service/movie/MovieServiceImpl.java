@@ -22,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getMovieById(String id) {
+    public Movie getMovieById(Long id) {
         return movieDao.getMovieById(id);
     }
 
