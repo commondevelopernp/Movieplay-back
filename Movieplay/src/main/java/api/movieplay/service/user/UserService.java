@@ -34,6 +34,7 @@ public class UserService {
         User user = userMapper.toEntity(userDTO);
         return userMapper.toDTO(userRepository.save(user));
     }
+
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
@@ -67,4 +68,10 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    // Asegúrate de que este método existe
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
 }
+
