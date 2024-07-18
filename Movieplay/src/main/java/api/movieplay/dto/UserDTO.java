@@ -19,8 +19,8 @@ public class UserDTO {
     private String nickname;
     private String email;
     private String profileImage;
-    private List<Integer> ratings;
-    private List<Integer> favorited;
+    private List<Long> ratings;
+    private List<Long> favorited;
 	
     // Constructor
     public UserDTO() {}
@@ -73,15 +73,15 @@ public class UserDTO {
         this.profileImage = profileImage;
     }
 
-    public List<Integer> getRatings() {
+    public List<Long> getRatings() {
         return ratings;
     }
 
-    public void setRatings(List<Integer> ratings) {
+    public void setRatings(List<Long> ratings) {
         this.ratings = ratings;
     }
 
-    public List<Integer> getFavorited() {
+    public List<Long> getFavorited() {
         return favorited;
     }
 
