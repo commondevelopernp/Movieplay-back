@@ -47,7 +47,7 @@ public class MovieController {
     }
  @GetMapping("/favorites/{id}")
     public ResponseEntity<List<Movie>> getFavoritesUser(@PathVariable Long id) {
-        Optional<User> userOptional = userService.findById(id);
+        Optional<User> userOptional = userService.getUserById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             List<Long> favoriteIds = user.getFavorited();
