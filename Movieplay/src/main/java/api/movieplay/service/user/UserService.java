@@ -2,11 +2,14 @@ package api.movieplay.service.user;
 
 import api.movieplay.dto.UserDTO;
 import api.movieplay.model.mapper.UserMapper;
+import api.movieplay.model.entity.Movie;
 import api.movieplay.model.entity.User;
+import api.movieplay.model.dao.MovieDao;
 import api.movieplay.model.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,7 +19,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private MovieDao moviedao;
     @Autowired
     private UserMapper userMapper;
 
@@ -64,7 +68,12 @@ public class UserService {
             return null; // O lanzar una excepción
         }
     }
-
+    public void addFavorite(Long idUsuario, Long idPelicula) {
+        User usuario = userRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.addFavorite(idPelicula);
+       
+        userRepository.save(usuario);
+    }
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

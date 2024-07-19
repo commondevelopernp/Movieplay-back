@@ -1,7 +1,7 @@
 package api.movieplay.model.entity;
 import jakarta.persistence.*;
 import java.util.List;
-
+import java.util.ArrayList;
 @Entity
 @Table(name = "users")
 public class User {
@@ -110,7 +110,12 @@ public class User {
 	public List<Long> getFavorited() {
 		return favorited;
 	}
-
+	public void addFavorite(Long rating) {
+	        if (ratings == null) {
+	            ratings = new ArrayList<>();
+	        }
+	        ratings.add(rating);
+	    }
 	public void setFavorited(List<Long> favorited) {
 		this.favorited = favorited;
 	}
