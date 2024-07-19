@@ -111,10 +111,10 @@ public class User {
 		return favorited;
 	}
 	public void addFavorite(Long rating) {
-	        if (ratings == null) {
-	            ratings = new ArrayList<>();
+	        if (favorited == null) {
+	            favorited = new ArrayList<>();
 	        }
-	        ratings.add(rating);
+	        favorited.add(rating);
 	    }
 	public void setFavorited(List<Long> favorited) {
 		this.favorited = favorited;
