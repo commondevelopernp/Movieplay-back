@@ -68,11 +68,11 @@ public class UserService {
             return null; // O lanzar una excepción
         }
     }
-    public void addFavorite(Long idUsuario, Long idPelicula) {
+    public User addFavorite(Long idUsuario, Long idPelicula) {
         User usuario = userRepository.findById(idUsuario).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         usuario.addFavorite(idPelicula);
        
-        userRepository.save(usuario);
+        return userRepository.save(usuario);
     }
     public void deleteUser(Long id) {
         userRepository.deleteById(id);

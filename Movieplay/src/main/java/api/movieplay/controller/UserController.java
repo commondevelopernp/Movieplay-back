@@ -1,6 +1,7 @@
 package api.movieplay.controller;
 
 import api.movieplay.dto.UserDTO;
+import api.movieplay.model.entity.User;
 import api.movieplay.service.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,10 @@ public class UserController {
         Optional<UserDTO> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    @PostMapping("/{idUsuario}/{idPelicula}")
+    public User addFavorite(@PathVariable Long idUsuario, @PathVariable Long idPelicula) {
+        return userService.addFavorite(idUsuario, idPelicula);
+    }
     @PostMapping
     public UserDTO createUser(@RequestBody UserDTO userDTO) {
         return userService.saveUser(userDTO);
